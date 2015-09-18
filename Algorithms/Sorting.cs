@@ -48,6 +48,26 @@ namespace Algorithms
 				a [i + 1] = key;
 			}
 		}
+
+		public void SelectionSort(int[] a)
+		{
+			for (int i = 0; i < a.Length - 1; i++)
+			{
+				var index = i;
+				for (int j = i+1; j < a.Length; j++)
+				{
+					if (a [j] < a [index])
+						index = j;
+				}
+
+				if (index != i)
+				{
+					var tmp = a [index];
+					a [index] = a [i];
+					a [i] = tmp;
+				}
+			}
+		}
 	}
 }
 
