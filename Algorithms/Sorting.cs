@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
+using System.Runtime.Remoting.Messaging;
+using System.Security.AccessControl;
 
 namespace Algorithms
 {
@@ -65,6 +67,68 @@ namespace Algorithms
 					var tmp = a [index];
 					a [index] = a [i];
 					a [i] = tmp;
+				}
+			}
+		}
+
+		public void MergeSort(int[] a)
+		{
+			int start = 0;
+			int end = a.Length - 1;
+			int mid = (start + end) / 2;
+			mergeSort (a, start, mid);
+			mergeSort (a, mid +1, end);
+			merge (a, start, mid, end);
+		}
+
+		private void mergeSort(int[] a, int start, int end)
+		{
+			if(start < end)
+			{
+				int mid = (start + end) / 2;
+				mergeSort (a, start, mid);
+				mergeSort (a, mid +1, end);
+				merge (a, start, mid, end);
+			}
+		}
+
+		private void merge(int[] a, int start, int mid, int end)
+		{
+			int n = mid - start + 1;
+			int m = end - mid;
+			int[] left = new int[n];
+			int[] right = new int[m];
+
+			for (int i = 0; i < n; i++)
+				left [i] = a [start + i];
+			for (int i = 0; i < m; i++)
+				right [i] = a [mid + i + 1];
+
+				//left [left.Length - 1] = 100000;
+				//right [right.Length - 1] = 100000;
+			int k = 0;
+			int j = 0;
+			for (int i = start; i <= end; i++)
+			{
+				if(k >= n)
+				{
+					a [i] = right[j];
+					j++;
+				}
+				else if(j >= m)
+				{
+					a [i] = left [k];
+					k++;
+				}
+				else if (left[k] <= right[j])
+				{
+					a [i] = left [k];
+					k++;
+				}
+				else
+				{
+					a [i] = right [j];
+					j++;
 				}
 			}
 		}
