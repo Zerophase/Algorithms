@@ -2,6 +2,7 @@
 using Algorithms;
 using System.Net;
 using System.Data.Linq;
+using System.Diagnostics;
 
 namespace Algorithims
 {
@@ -14,12 +15,15 @@ namespace Algorithims
 		private static int[] valuesInsert = {1,2,3,4,5,6};
 		private static int valueToFind = 7;
 		private static int[] valuesSelection = {10, 20, 15, 18, 5, 4, 9};
-		private static int[] valuesMegeSort = { 4, 15, 2, 1, 14, 8, 6, 3};
+		private static int[] valuesMegeSort = new int[1000000];//{ 4, 15, 2, 1, 14, 8,13, 15, 1, 6, 3, 4};
+		private static int[] valuesMergeSort2 = new int[1000000];
 
 		private static byte[] bValue = { 1,0,1 };
 		private static byte[] bValue2 = { 1,1 ,1};
 		private static Binary firstBinaryNumber;
 		private static Binary secondBinaryNumber;
+
+		private static Random random = new Random ();
 
 		public static void Main (string[] args)
 		{
@@ -37,7 +41,52 @@ namespace Algorithims
 
 			printAndOperate (valuesSelection, new Action<int[]>(sortingAlg.SelectionSort));
 
-			printAndOperate (valuesMegeSort, new Action <int[]>(sortingAlg.MergeSort));
+			for (int i = 0; i < valuesMegeSort.Length; i++)
+			{
+				valuesMergeSort2[i] = valuesMegeSort [i] = random.Next (0, 100000);
+			}
+
+			Stopwatch stopwatch = new Stopwatch ();
+			stopwatch.Start ();
+			sortingAlg.MergeSort (valuesMegeSort);
+			//printAndOperate (valuesMegeSort, new Action <int[]>(sortingAlg.MergeSort));
+			stopwatch.Stop ();
+			Console.WriteLine ("Time elapsed MergeSort : {0}", stopwatch.Elapsed);
+
+			stopwatch.Restart ();
+			sortingAlg.sortmethod (valuesMergeSort2, 0, valuesMergeSort2.Length - 1);
+			stopwatch.Stop ();
+			Console.WriteLine ("Time elapsed MergeSort2: {0}", stopwatch.Elapsed);
+
+			int zeroCount = 0;
+			for (int i = 0; i < valuesMegeSort.Length; i++)
+			{
+				if (valuesMegeSort[i] == 0)
+				{
+					zeroCount++;
+				}
+			}
+			Console.WriteLine ("valuesMergeSort zero count: {0}", zeroCount);
+			int zeroCount2 = 0;
+			for (int i = 0; i < valuesMergeSort2.Length; i++)
+			{
+				if (valuesMergeSort2[i] == 0)
+				{
+					zeroCount2++;
+				}
+			}
+			Console.WriteLine ("valuesMergeSort2 zero count: {0}", zeroCount2);
+			for (int i = 0; i < valuesMegeSort.Length; i++)
+			{
+				if (valuesMegeSort [i] != valuesMergeSort2 [i])
+				{
+					Console.WriteLine ("Values do not match.");
+					return;
+				}
+					
+			}
+
+			Console.WriteLine ("Values Match.");
 		}
 
 		private static void printAndOperate(int[] values, Action<int[]> algorithim)
