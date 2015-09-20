@@ -79,8 +79,8 @@ namespace Algorithms
 			int end = a.Length - 1;
 			int mid = (start + end) / 2;
 			mergeSort (a, start, mid);
-			mergeSort (a, mid +1, end);
-			merge (a, start, mid, end);
+			mergeSort (a, (mid +1), end);
+			merge (a, start, (mid+1), end);
 		}
 
 		private void mergeSort(int[] a, int start, int end)
@@ -89,17 +89,17 @@ namespace Algorithms
 			{
 				int mid = (start + end) / 2;
 				mergeSort (a, start, mid);
-				mergeSort (a, mid +1, end);
-				merge (a, start, mid, end);
+				mergeSort (a, (mid +1), end);
+				merge (a, start, (mid+1), end);
 			}
 		}
 
 		private void merge(int[] a, int start, int mid, int end)
 		{
-			int n = mid - start + 1;
-			int m = end - mid;
-
-			if (n <= 1 && m <= 1)
+			if (end - start < 1)
+				return;
+			
+			if (end - start < 2)
 			{
 				int tempL = a [start];
 				int tempR = a [end];
@@ -115,46 +115,33 @@ namespace Algorithms
 				}
 				return;
 			}
-				
-			
-			int[] left = new int[n];
-			int[] right = new int[m];
 
-			for (int i = 0; i < n; i++)
-				left [i] = a [start + i];
-			for (int i = 0; i < m; i++)
-				right [i] = a [mid + i + 1];
-
-				//left [left.Length - 1] = 100000;
-				//right [right.Length - 1] = 100000;
-			int k = 0;
-			int j = 0;
-			for (int i = start; i <= end; i++)
+			int leftEnd = mid - 1;
+			int tmpPos = 0;
+			int numElements = (end - start + 1);
+			int[] temp = new int[numElements];
+			while ((start <= leftEnd) && (mid <= end))
 			{
-				if(k >= n)
-				{
-					a [i] = right[j];
-					j++;
-				}
-				else if(j >= m)
-				{
-					a [i] = left [k];
-					k++;
-				}
-				else if (left[k] <= right[j])
-				{
-					a [i] = left [k];
-					k++;
-				}
+				if (a[start] <= a[mid])
+					temp[tmpPos++] = a[start++];
 				else
-				{
-					a [i] = right [j];
-					j++;
-				}
+					temp[tmpPos++] = a[mid++];
+			}
+			while (start <= leftEnd)
+				temp[tmpPos++] = a[start++];
+			while (mid <= end)
+				temp[tmpPos++] = a[mid++];
+
+			var tempIterator = tmpPos - 1;
+			for (int i = 0; i < numElements; i++)
+			{
+				a [end] = temp [tempIterator];
+				end--;
+				tempIterator--;
 			}
 		}
 
-		int [] temp = new int[1000000];
+		int [] temp2 = new int[1000000];
 		public void mergemethod(int [] numbers, int left, int mid, int right)
 		{
 			
@@ -165,17 +152,17 @@ namespace Algorithms
 			while ((left <= left_end) && (mid <= right))
 			{
 				if (numbers[left] <= numbers[mid])
-					temp[tmp_pos++] = numbers[left++];
+					temp2[tmp_pos++] = numbers[left++];
 				else
-					temp[tmp_pos++] = numbers[mid++];
+					temp2[tmp_pos++] = numbers[mid++];
 			}
 			while (left <= left_end)
-				temp[tmp_pos++] = numbers[left++];
+				temp2[tmp_pos++] = numbers[left++];
 			while (mid <= right)
-				temp[tmp_pos++] = numbers[mid++];
+				temp2[tmp_pos++] = numbers[mid++];
 			for (i = 0; i < num_elements; i++)
 			{
-				numbers[right] = temp[right];
+				numbers[right] = temp2[right];
 				right--;
 			}
 

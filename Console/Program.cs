@@ -15,7 +15,7 @@ namespace Algorithims
 		private static int[] valuesInsert = {1,2,3,4,5,6};
 		private static int valueToFind = 7;
 		private static int[] valuesSelection = {10, 20, 15, 18, 5, 4, 9};
-		private static int[] valuesMegeSort = new int[1000000];//{ 4, 15, 2, 1, 14, 8,13, 15, 1, 6, 3, 4};
+		private static int[] valuesMegeSort = new int[1000000];
 		private static int[] valuesMergeSort2 = new int[1000000];
 
 		private static byte[] bValue = { 1,0,1 };
