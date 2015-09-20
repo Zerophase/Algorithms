@@ -96,9 +96,6 @@ namespace Algorithms
 
 		private void merge(int[] a, int start, int mid, int end)
 		{
-			if (end - start < 1)
-				return;
-			
 			if (end - start < 2)
 			{
 				int tempL = a [start];
