@@ -15,6 +15,8 @@ namespace Algorithms
 		{
 		}
 
+		private Searching search = new Searching ();
+
 		// TODO optimize
 		public void InsertionSort(int[] a, SortOrder sortOrder)
 		{
@@ -41,15 +43,22 @@ namespace Algorithms
 
 			for (int j = 1; j < a.Length; j++) 
 			{
-				var key = a [j];
-				// insert a[j] into the sorted sequence a[0...j -1]
-				var i = j - 1;
-				while (i > -1 && sort(a[i], key))
+				int k = search.BinarySearch (a, 0, j, a[j]);
+				if(k < j)
 				{
-					a [i + 1] = a [i];
-					i = i - 1;
+					int temp = a [j];
+					for (int i = j - 1; i >= k; i--)
+						a [i + 1] = a [i];
+					a [k] = temp;
 				}
-				a [i + 1] = key;
+				// insert a[j] into the sorted sequence a[0...j -1]
+//				var i = j - 1;
+//				while (i > -1 && sort(a[i], key))
+//				{
+//					a [i + 1] = a [i];
+//					i = i - 1;
+//				}
+//				a [i + 1] = key;
 			}
 		}
 

@@ -12,7 +12,7 @@ namespace Algorithims
 		private static Searching searchAlg = new Searching();
 		private static Addition additionAlg = new Addition();
 
-		private static int[] valuesInsert = {1,2,3,4,5,6};
+		private static int[] valuesInsert = {6,5,4,3,2,1};
 		private static int valueToFind = 7;
 		private static int[] valuesSelection = {10, 20, 15, 18, 5, 4, 9};
 		private static int[] valuesMegeSort = new int[1000000];
